@@ -1,3 +1,18 @@
+"""
+pygame looping:
+
+self.window.fill(BLACK)
+while True:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				quit()
+		pygame.display.update()
+"""
+
+
+
+
 from screen import Screen
 import pygame
 

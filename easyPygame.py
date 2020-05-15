@@ -1,14 +1,19 @@
 import pygame
-from colors import WHITE
+from colors import WHITE, BLACK
 
 class Button:
-	def __init__(self, display, color, x, y, w, h,):
-		pygame.draw.rect(display, color,(x,y,w,h))
-		self.x = x
-		self.y = y
-		self.w = w
-		self.h = h
+	def __init__(self, txt, color, locTuple, win):
+		pygame.draw.rect(win, color, locTuple)
+		self.x = locTuple[0]
+		self.y = locTuple[1]
+		self.w = locTuple[2]
+		self.h = locTuple[3]
+		if txt != "":
+			self.placeText(txt, win)
 		return
+
+	def placeText(self, txt, win):
+		txt = Text(txt, int(self.x * 2.5) + 15, self.y + int(self.h / 2), int(self.h / 1.5), win)
 
 	def checkIfClicked(self):
 		mouse = pygame.mouse.get_pos()

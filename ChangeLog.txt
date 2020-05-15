@@ -1,0 +1,2 @@
+version 0.01:
+- added the graphic engine i'll be using for the project (easyPygame) to handle everything
