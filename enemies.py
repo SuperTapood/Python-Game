@@ -5,7 +5,7 @@ from time import sleep as wait
 class Red(Enemy):
 	path = [1, 2, 3, 4]
 	def __init__(self, lvl):
-		super().__init__(self.path, lvl)
+		super().__init__(self.path, lvl, 1)
 		return
 	pass
 
@@ -15,9 +15,17 @@ class Enemies:
 		self.enemies = [Red(levelTuple[0])]
 		return
 
-	def tick(self):
-		start = time()
+	def tick(self, factor):
 		for enem in self.enemies:
-			enem.tick(start)
+			enem.tick(factor)
 		return
+
+	def getEnemiesLocs(self):
+		return [enem.pathIndex for enem in self.enemies]
+
+	def attack(self, prefix):
+		for enem in self.enemies:
+			if enem.canAttack(prefix):
+				return True
+		return False
 	pass

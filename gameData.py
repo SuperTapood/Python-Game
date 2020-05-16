@@ -20,7 +20,16 @@ def getEnemyLevels():
 		return (RLEVEL)
 	return
 
+
+def reset():
+	global NIGHT, CURRENT_NIGHT
+	NIGHT = 1
+	CURRENT_NIGHT = 1
+	return
+
 NIGHTTUPLES = [(1, 1)]
-NIGHT = 1
+NIGHT = 2
 RLEVEL = 1
 CURRENT_NIGHT = 1
+NIGHT_LENGTH = 600
+ENEMY_DELAY = 2800

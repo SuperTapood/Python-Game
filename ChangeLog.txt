@@ -1,2 +1,18 @@
+version 0.02:
+- added a switch-case class for complex if-ing
+- added first winning screen
+- added death screen
+- added and tested enemy movement (only for Red but I use superclasses)
+- added new game and load game buttons
+- mashed together a couple of screens
+- easyPygame has now two seperate fucntions for buttons and texts (will later combine)
+- enemies work?
+- added a file to handle the game data
+- added a loader file
+- added a file to contain all the side function
+- added a color variables page (only has black, white, red, yellow and gray for now)
+- added the office doors function (getting 1140 FPS)
+
+
 version 0.01:
 - added the graphic engine i'll be using for the project (easyPygame) to handle everything
