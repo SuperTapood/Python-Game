@@ -16,10 +16,20 @@ class Enemy:
 
 	def tick(self, factor):
 		self.clockTime -= factor
+		print(self.clockTime)
+		print(self.pathIndex)
+		# chance translates to about once per 5 clocks for level 1
+		if randint(0, 10000 - self.level * 100) == 69 and self.level > 0:
+			if self.pathIndex < len(self.path):
+					self.pathIndex += 1
+			self.move()
+			self.clockTime = (ENEMY_DELAY - 100 * (self.level - 1)) / 100
+			return
 		if self.clockTime <= 0 :
 			rand = randint(0, 20)
 			if rand <= self.level or True:
-				self.pathIndex += 1
+				if self.pathIndex < len(self.path):
+					self.pathIndex += 1
 				self.move()
 			self.clockTime = (ENEMY_DELAY - 100 * (self.level - 1)) / 100
 		return
@@ -37,5 +47,16 @@ class Enemy:
 		return
 
 	def canAttack(self, prefix):
-		return prefix[self.side] == "0" and self.attack
+		if self.attack:
+			if prefix[self.side] == "0":
+				return True
+			else:
+				self.attack = False
+				self.atDoor = False
+				# return the enemy to his first position
+				self.pathIndex = 0
+				# or, randomaly, return him to a random phase
+				if randint(0, 20) <= self.level:
+					self.pathIndex = randint(0, len(self.path) - 2)
+		return
 	pass

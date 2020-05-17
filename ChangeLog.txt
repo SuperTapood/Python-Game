@@ -1,3 +1,12 @@
+version 0.03:
+- added the scoring system (for night 7)
+- added the reset function for the enemies
+- added sixth night
+- added a "level-up" function so enemies can get more aggressive during the night
+- added seventh night (for now, red only)
+- enemies are now allowed to skip a clock randomly
+- added a semi progress bar to mimic how far the enemy is
+
 version 0.02:
 - added a switch-case class for complex if-ing
 - added first winning screen

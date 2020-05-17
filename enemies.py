@@ -28,4 +28,7 @@ class Enemies:
 			if enem.canAttack(prefix):
 				return True
 		return False
+
+	def __iter__(self):
+		return iter(self.enemies)
 	pass
