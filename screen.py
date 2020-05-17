@@ -18,7 +18,7 @@ class Screen:
 		self.x = 1280
 		self.y = 720
 		self.window = pygame.display.set_mode((self.x, self.y))
-		self.dir = r"C:\Users\SuperTapood\Documents\GitHub\Python-Game\Assets"
+		self.dir = r"Assets"
 		self.assets = os.listdir(self.dir)
 		self.imgs = []
 		for img in self.assets:
@@ -26,6 +26,7 @@ class Screen:
 				self.imgs.append(self.dir + "\\" + img)
 		self.imgNames = [img[len(img) - 6:len(img) - 4] for img in self.imgs]
 		self.imgs = [pygame.image.load(img) for img in self.imgs]
+		print(self.imgNames)
 		return
 
 	def blitNightNumber(self):

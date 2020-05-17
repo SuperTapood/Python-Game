@@ -11,6 +11,7 @@ self.window.fill(BLACK)
 """
 from screen import Screen
 import pygame
+from . import *
 
 
 
