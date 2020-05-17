@@ -18,6 +18,7 @@ class Screen:
 		self.x = 1280
 		self.y = 720
 		self.window = pygame.display.set_mode((self.x, self.y))
+		pygame.display.set_caption(f"Five Awesome Nights {__version__}")
 		self.dir = r"Assets"
 		self.assets = os.listdir(self.dir)
 		self.imgs = []
