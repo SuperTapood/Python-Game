@@ -26,8 +26,8 @@ class Enemy:
 			self.clockTime = (ENEMY_DELAY - 100 * (self.level - 1)) / 100
 			return
 		if self.clockTime <= 0 :
-			rand = randint(0, 20)
-			if rand <= self.level or True:
+			rand = randint(1, 20)
+			if rand <= self.level:
 				if self.pathIndex < len(self.path):
 					self.pathIndex += 1
 				self.move()

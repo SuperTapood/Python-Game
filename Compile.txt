@@ -1,1 +1,0 @@
-to compile run "python setup.py build" on a cmd located at this folder

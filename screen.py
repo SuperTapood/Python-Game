@@ -5,11 +5,12 @@ from colors import WHITE, GRAY, BLACK, RED, YELLOW
 import gameData
 from time import time
 import loader
-from helpFunctions import returnOfficePrefix, startNight, checkIfOver
+from helpFunctions import returnOfficePrefix, startNight, checkIfOver, returnHour
 from time import sleep as wait
+from power import Power
 
 
-__version__ = "0.03"
+__version__ = "0.04"
 __author__ = "Team Index"
 
 class Screen:
@@ -27,7 +28,6 @@ class Screen:
 				self.imgs.append(self.dir + "\\" + img)
 		self.imgNames = [img[len(img) - 6:len(img) - 4] for img in self.imgs]
 		self.imgs = [pygame.image.load(img) for img in self.imgs]
-		print(self.imgNames)
 		return
 
 	def blitNightNumber(self):
@@ -38,6 +38,7 @@ class Screen:
 			if time() - start >= 5:
 				self.enemies = loader.loadEnemies()
 				startNight()
+				self.power = Power()
 				self.blitOffice("00")
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
@@ -104,7 +105,7 @@ class Screen:
 			txt = Text("FIVE", 1200, 40, 50, self.window)
 			txt = Text("AWESOME", 1130, 100, 50, self.window)
 			txt = Text("NIGHTS", 1170, 160, 50, self.window)
-			txt = Text("Pre-Alpha", 1150, 220, 50, self.window, RED)
+			txt = Text("ALPHA", 1180, 220, 50, self.window, RED)
 			txt = Text(f"version {__version__}", 1180, 690, 30, self.window)
 			txt = Text(f"made by the unspeakable {__author__}", 990, 650, 30, self.window)
 			newBtn = Button(GRAY, (60, 240, 200, 50),  self.window,)
@@ -159,8 +160,11 @@ class Screen:
 		start = time()
 		frame = 0
 		while True:
+			self.power.tick()
 			if checkIfOver():
 				self.blitWin()
+			self.window.blit(self.imgs[self.imgNames.index(officeState)], (0, 0))
+			txt = Text(f"{returnHour()} AM", 1200, 30, 50, self.window)
 			frame += 1
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
@@ -181,22 +185,21 @@ class Screen:
 		start = time()
 		officeState = prefix
 		while True:
+			self.power.tick()
 			if checkIfOver():
 				self.blitWin()
 			self.window.fill(BLACK)
-			pos = self.enemies.getEnemiesLocs()
-			txt = Text(f"Red: {pos[0]}", self.x // 2, self.y // 2, 50, self.window)
 			x = 50
 			y = 50
-			for enem in self.enemies:
+			for enem, color in zip(self.enemies.enemies, gameData.ENEMY_COLORS):
 				for i in range(len(enem.path)):
 					btn = Button(WHITE, (x *(i + 1) * 2, y, 53, 53), self.window)
 				index = enem.pathIndex
 				if index > len(enem.path):
 					index = len(enem.path)
 				for i in range(index):
-					btn = Button(RED, (x *(i + 1) * 2 + 1, y + 1, 50, 50), self.window)
-				y += y
+					btn = Button(color, (x *(i + 1) * 2 + 1, y + 1, 50, 50), self.window)
+				y += 100
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					pygame.quit()

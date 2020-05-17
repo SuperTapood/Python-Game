@@ -1,3 +1,9 @@
+version 0.04:
+- added three more enemies (and they work?)
+- "added" the first three nights
+- added the clock
+- added a python script to handle compiling
+
 version 0.03:
 - added the scoring system (for night 7)
 - added the reset function for the enemies

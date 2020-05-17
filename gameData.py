@@ -1,5 +1,6 @@
 import json
 from switch import switch, case
+from colors import RED, YELLOW, GREEN, BLUE
 
 def getNightNum():
 	switch(CURRENT_NIGHT)
@@ -17,7 +18,7 @@ def getEnemyLevels():
 	if NIGHT != 7:
 		return NIGHTTUPLES[NIGHT - 1]
 	else:
-		return (RLEVEL)
+		return NIGHTTUPLES
 	return
 
 
@@ -32,7 +33,7 @@ def reset():
 
 def increaseNight():
 	global NIGHT, CURRENT_NIGHT
-	if CURRENT_NIGHT != 6 and NIGHT != 6:
+	if CURRENT_NIGHT != 6 and NIGHT != 6 and NIGHT < CAP_NIGHT:
 		CURRENT_NIGHT += 1
 		NIGHT += 1
 	elif SixBeat == 0:
@@ -41,12 +42,17 @@ def increaseNight():
 		SevenBeat = 1
 	return
 
-NIGHTTUPLES = [[1, 1, 0, 0], [2, 2, 1, 0]]
+NIGHTTUPLES = [[1, 1, 0, 0], [2, 2, 1, 0], [4, 4, 4, 4]]
+CAP_NIGHT = 3
 NIGHT = 7
 CURRENT_NIGHT = 7
 NIGHT_LENGTH = 600
-ENEMY_DELAY = 2800 / 100
+ENEMY_DELAY = 2800
 HIGH_SCORE = 0
 SixBeat = 1
 SevenBeat = 1
 ENEMY_LEVELS = [0, 0, 0, 0]
+ENEMY_PATHS = [[0, 1, 2, 3], [0, 3, 7, 4], [2, 1, 5, 3], [1, 2, 6, 4]]
+ENEMY_SIDES = [1, 0, 1, 0]
+ENEMY_COLORS = [RED, GREEN, BLUE, YELLOW]
+POWER = 100

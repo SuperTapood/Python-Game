@@ -22,3 +22,11 @@ def startNight():
 def checkIfOver():
 	global START
 	return time() - START >= NIGHT_LENGTH
+
+def returnHour():
+	global START
+	t = time() - START
+	if t < NIGHT_LENGTH / 6:
+		return 12
+	else:
+		return abs(6 - int(NIGHT_LENGTH // t))
