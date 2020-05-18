@@ -108,7 +108,7 @@ class Screen:
 			txt = Text("ALPHA", 1180, 220, 50, self.window, RED)
 			txt = Text(f"version {__version__}", 1180, 690, 30, self.window)
 			txt = Text(f"made by the unspeakable {__author__}", 990, 650, 30, self.window)
-			newBtn = Button(GRAY, (60, 240, 200, 50),  self.window,)
+			newBtn = Button(GRAY, (60, 240, 200, 50),  self.window)
 			txt = Text("New Game", 160, 265, 35, self.window, BLACK)
 			if newBtn.checkIfClicked():
 				gameData.reset()
