@@ -4,6 +4,7 @@ version 0.04:
 - added the clock
 - added a python script to handle compiling
 - added the base for a power system
+- added file documentation
 
 version 0.03:
 - added the scoring system (for night 7)

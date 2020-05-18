@@ -11,11 +11,11 @@ self.window.fill(BLACK)
 """
 from screen import Screen
 import pygame
-from . import *
 
 
 
 if __name__ == "__main__":
+	# run this god forsaken code
 	pygame.init()
 	scr = Screen()
 	scr.blitMainMenu()

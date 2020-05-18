@@ -1,6 +1,8 @@
 from enemies import Enemies
 import gameData
 
+## felt like I needed a loader to handle loading enemies. functions are pretty self-explanatory ##
+
 
 
 def loadEnemies():

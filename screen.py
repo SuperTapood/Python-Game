@@ -268,8 +268,3 @@ class Screen:
 					quit()
 			pygame.display.update()
 	pass
-
-
-pygame.init()
-scr = Screen()
-scr.blitMainMenu()

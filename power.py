@@ -19,6 +19,7 @@ class Power:
 		return
 
 	def tick(self):
+		# substarct power every second
 		if time() - self.count >= 1:
 			self.count = time()
 			self.substract()
