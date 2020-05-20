@@ -1,3 +1,16 @@
+version 0.05:
+- added a metadata file to store the metadata for the game
+- added a screenBlitter superclass to tidy the code
+- added blue to the custom night menu
+- added a visible scoring system to the custom night
+- added yellow to the custom nigth menu
+- added green to the custom night menu
+- added color to the enemy names in the custom night
+- added a power system (unbalanced)
+- added a system to see how much power is used
+- power system balanced (maybe)
+
+
 version 0.04:
 - added three more enemies (and they work?)
 - "added" the first three nights
@@ -23,7 +36,7 @@ version 0.02:
 - added new game and load game buttons
 - mashed together a couple of screens
 - easyPygame has now two seperate fucntions for buttons and texts (will later combine)
-- enemies work?
+- enemies work
 - added a file to handle the game data
 - added a loader file
 - added a file to contain all the side function

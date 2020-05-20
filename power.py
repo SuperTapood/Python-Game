@@ -11,7 +11,7 @@ class Power:
 
 	def substract(self):
 		# will later add a more complex power substraction system
-		self.power -= self.bars * 1
+		self.power -= self.bars * (1 / 14)
 		return
 
 	def powerUp(self):
@@ -27,4 +27,12 @@ class Power:
 				return True
 			return False
 		return False
+
+	def change(self, prefix):
+		self.bars = 1 + int(prefix[1]) + int(prefix[0])
+		return
+
+	def powerDown(self):
+		self.bars -= 1
+		return
 	pass

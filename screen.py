@@ -8,12 +8,10 @@ import loader
 from helpFunctions import returnOfficePrefix, startNight, checkIfOver, returnHour
 from time import sleep as wait
 from power import Power
+from screenBlitter import ScreenBlitter
+from metaData import __version__
 
-
-__version__ = "0.04"
-__author__ = "Team Index"
-
-class Screen:
+class Screen(ScreenBlitter):
 	def __init__(self):
 		self.enemies = None
 		self.x = 1280
@@ -56,22 +54,13 @@ class Screen:
 		self.window.fill(BLACK)
 		while True:
 			self.window.fill(BLACK)
-			txt = Text("RED", self.x // 2, self.y // 2, 50, self.window)
-			txt = Text(str(gameData.ENEMY_LEVELS[0]), self.x // 2, self.y // 2 + 50, 50, self.window)
-			rPlusBtn = Button(GRAY, (self.x // 2 + 50 , self.y // 2 + 50, 50, 50), self.window)
-			txt = Text("+", self.x // 2 + 75, self.y // 2 + 75, 50, self.window, BLACK)
-			if rPlusBtn.checkIfClicked():
-				if gameData.ENEMY_LEVELS[0] < 20:
-					gameData.ENEMY_LEVELS[0] += 1
-					wait(0.1)
-			rMinusBtn = Button(GRAY, (self.x // 2 - 100 , self.y // 2 + 50, 50, 50), self.window)
-			txt = Text("-", self.x // 2 - 75, self.y // 2 + 75, 50, self.window, BLACK)
-			if rMinusBtn.checkIfClicked():
-				if gameData.ENEMY_LEVELS[0] > 0:
-					gameData.ENEMY_LEVELS[0] -= 1
-					wait(0.1)
-			startBtn = Button(GRAY, (800, 670, 550, 150), self.window)
-			txt = Text("Begin Night", 1000, 700, 50, self.window, BLACK)
+			self.customRed()
+			self.customBlue()
+			self.customYellow()
+			self.customGreen()
+			self.calculatePoints()
+			startBtn = Button(GRAY, (800, 670, 450, 150), self.window)
+			txt = Text("Begin Night", 1050, 695, 50, self.window, BLACK)
 			if startBtn.checkIfClicked():
 				self.bootCustomNight()
 				startNight()
@@ -102,36 +91,8 @@ class Screen:
 	def blitMainMenu(self):
 		self.window.fill(BLACK)
 		while True:
-			txt = Text("FIVE", 1200, 40, 50, self.window)
-			txt = Text("AWESOME", 1130, 100, 50, self.window)
-			txt = Text("NIGHTS", 1170, 160, 50, self.window)
-			txt = Text("ALPHA", 1180, 220, 50, self.window, RED)
-			txt = Text(f"version {__version__}", 1180, 690, 30, self.window)
-			txt = Text(f"made by the unspeakable {__author__}", 990, 650, 30, self.window)
-			newBtn = Button(GRAY, (60, 240, 200, 50),  self.window)
-			txt = Text("New Game", 160, 265, 35, self.window, BLACK)
-			if newBtn.checkIfClicked():
-				gameData.reset()
-				self.blitNightNumber()
-			loadBtn = Button(GRAY, (60, 340, 200, 50), self.window)
-			txt = Text("Load Game", 160, 365, 35, self.window, BLACK)
-			if loadBtn.checkIfClicked():
-				self.blitNightNumber()
-			if gameData.SevenBeat == 1:
-				ExtraBtn = Button(GRAY, (60, 440, 200, 50), self.window)
-				txt = Text("Extras", 160, 465, 35, self.window, BLACK)
-				if ExtraBtn.checkIfClicked():
-					self.blitExtras()
-			if gameData.NIGHT > 5:
-				SixBtn = Button(GRAY, (60, 540, 200, 50), self.window)
-				txt = Text("6th Night", 160, 565, 35, self.window, BLACK)
-				if SixBtn.checkIfClicked():
-					self.blitSixthNight()
-			if gameData.SixBeat:
-				SevenBtn = Button(GRAY, (40, 640, 250, 50), self.window)
-				txt = Text("Custom Night", 160, 665, 35, self.window, BLACK)
-				if SevenBtn.checkIfClicked():
-					self.blitCustomNight()
+			self.mainText()
+			self.mainButtons()
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					pygame.quit()
@@ -158,20 +119,21 @@ class Screen:
 		officeState = prefix
 		self.window.blit(self.imgs[self.imgNames.index(officeState)], (0, 0))
 		start = time()
-		frame = 0
 		while True:
 			self.power.tick()
+			self.power.change(officeState)
 			if checkIfOver():
 				self.blitWin()
 			self.window.blit(self.imgs[self.imgNames.index(officeState)], (0, 0))
 			txt = Text(f"{returnHour()} AM", 1200, 30, 50, self.window)
-			frame += 1
+			self.blitPower()
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					pygame.quit()
 					quit()
 				elif event.type == pygame.KEYDOWN:
 					if returnOfficePrefix(chr(event.key), officeState) == "cam":
+						self.power.powerUp()
 						self.blitCameras(officeState)
 					else:
 						officeState = returnOfficePrefix(chr(event.key), officeState)
@@ -189,23 +151,14 @@ class Screen:
 			if checkIfOver():
 				self.blitWin()
 			self.window.fill(BLACK)
-			x = 50
-			y = 50
-			for enem, color in zip(self.enemies.enemies, gameData.ENEMY_COLORS):
-				for i in range(len(enem.path)):
-					btn = Button(WHITE, (x *(i + 1) * 2, y, 53, 53), self.window)
-				index = enem.pathIndex
-				if index > len(enem.path):
-					index = len(enem.path)
-				for i in range(index):
-					btn = Button(color, (x *(i + 1) * 2 + 1, y + 1, 50, 50), self.window)
-				y += 100
+			self.blitCamsSimple()
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					pygame.quit()
 					quit()
 				elif event.type == pygame.KEYDOWN:
 					if returnOfficePrefix(chr(event.key), officeState) == "cam":
+						self.power.powerDown()
 						self.blitOffice(officeState)
 					else:
 						officeState = returnOfficePrefix(chr(event.key), officeState)
@@ -267,4 +220,10 @@ class Screen:
 					pygame.quit()
 					quit()
 			pygame.display.update()
+		return
 	pass
+
+
+pygame.init()
+scr = Screen()
+scr.blitMainMenu()

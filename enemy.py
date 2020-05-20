@@ -17,14 +17,12 @@ class Enemy:
 		self.atDoor = False
 		self.attack = False
 		# clock time in ms (28 seconds?)
-		self.clockTime = (ENEMY_DELAY - 100 * (self.level - 1))
+		self.clockTime = (ENEMY_DELAY - self.level)
 		return
 
 	def tick(self, factor):
 		# move the clock by factor factor
 		self.clockTime -= factor
-		print(self.clockTime)
-		print(self.pathIndex)
 		# chance translates to about once per 5 clocks
 		if randint(0, 10000 - self.level * 100) == 69 and self.level > 0:
 			if self.pathIndex < len(self.path):
