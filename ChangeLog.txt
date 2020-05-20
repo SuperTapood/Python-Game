@@ -9,6 +9,7 @@ version 0.05:
 - added a power system (unbalanced)
 - added a system to see how much power is used
 - power system balanced (maybe)
+- added 2 more colors
 
 
 version 0.04:
