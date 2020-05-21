@@ -5,11 +5,10 @@ from colors import WHITE, GRAY, BLACK, RED, YELLOW
 import gameData
 from time import time
 import loader
-from helpFunctions import returnOfficePrefix, startNight, checkIfOver, returnHour
+from helpFunctions import returnOfficePrefix, startNight, checkIfOver, returnHour, returnFiles, version
 from time import sleep as wait
 from power import Power
 from screenBlitter import ScreenBlitter
-from metaData import __version__
 
 class Screen(ScreenBlitter):
 	def __init__(self):
@@ -17,15 +16,12 @@ class Screen(ScreenBlitter):
 		self.x = 1280
 		self.y = 720
 		self.window = pygame.display.set_mode((self.x, self.y))
-		pygame.display.set_caption(f"Five Awesome Nights {__version__}")
-		self.dir = r"Assets"
-		self.assets = os.listdir(self.dir)
-		self.imgs = []
-		for img in self.assets:
-			if img[:7] == "screen_":
-				self.imgs.append(self.dir + "\\" + img)
-		self.imgNames = [img[len(img) - 6:len(img) - 4] for img in self.imgs]
-		self.imgs = [pygame.image.load(img) for img in self.imgs]
+		pygame.display.set_caption(f"Five Awesome Nights {version()}")
+		direc = r"Assets"
+		self.imgs, self.imgNames = returnFiles(direc, "screen_")
+		self.imgNames = [img[len(img) - 6:len(img) - 4] for img in self.imgNames]
+		self.extras = returnFiles(direc, "extras_")[0]
+		self.extras = self.imgs
 		return
 
 	def blitNightNumber(self):
@@ -104,9 +100,7 @@ class Screen(ScreenBlitter):
 		self.window.fill(BLACK)
 		start = time()
 		while True:
-			txt = Text("Extras section not avaliable yet... exiting...", self.x // 2, self.y // 2, 35, self.window, WHITE)
-			if time() - start >= 3:
-				self.blitMainMenu()
+			self.showOff(0)
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					pygame.quit()
@@ -135,6 +129,9 @@ class Screen(ScreenBlitter):
 					if returnOfficePrefix(chr(event.key), officeState) == "cam":
 						self.power.powerUp()
 						self.blitCameras(officeState)
+					elif event.key == pygame.K_ESCAPE:
+						endNightEarly()
+						self.blitMainMenu()
 					else:
 						officeState = returnOfficePrefix(chr(event.key), officeState)
 						self.window.blit(self.imgs[self.imgNames.index(officeState)], (0, 0))
@@ -160,6 +157,9 @@ class Screen(ScreenBlitter):
 					if returnOfficePrefix(chr(event.key), officeState) == "cam":
 						self.power.powerDown()
 						self.blitOffice(officeState)
+					elif event.key == pygame.K_ESCAPE:
+						endNightEarly()
+						self.blitMainMenu()
 					else:
 						officeState = returnOfficePrefix(chr(event.key), officeState)
 			self.enemies.tick(time() - start)
@@ -180,6 +180,9 @@ class Screen(ScreenBlitter):
 				if event.type == pygame.QUIT:
 					pygame.quit()
 					quit()
+				elif event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						self.blitMainMenu()
 			pygame.display.update()
 		return
 
@@ -198,6 +201,9 @@ class Screen(ScreenBlitter):
 				if event.type == pygame.QUIT:
 					pygame.quit()
 					quit()
+				elif event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						self.blitMainMenu()
 			pygame.display.update()
 		return
 
@@ -207,6 +213,7 @@ class Screen(ScreenBlitter):
 		for enem in self.enemies:
 			pts += enem.level * 1000
 		count = 0
+		gameData.updateHS(pts)
 		while True:
 			wait(0.03)
 			self.window.fill(BLACK)
@@ -219,11 +226,9 @@ class Screen(ScreenBlitter):
 				if event.type == pygame.QUIT:
 					pygame.quit()
 					quit()
+				elif event.type == pygame.KEYDOWN:
+						if event.key == pygame.K_ESCAPE:
+							self.blitMainMenu()
 			pygame.display.update()
 		return
 	pass
-
-
-pygame.init()
-scr = Screen()
-scr.blitMainMenu()

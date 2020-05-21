@@ -1,6 +1,7 @@
 import json
 from switch import switch, case
 from colors import RED, YELLOW, GREEN, BLUE
+import numpy as np
 
 # this file stores all of the constants and variables I need to use and some helpful functions
 
@@ -47,6 +48,9 @@ def increaseNight():
 	else:
 		SevenBeat = 1
 	return
+
+def updateHS(pts):
+	HIGH_SCORE = np.max(pts, HIGH_SCORE)
 
 # enemy levels for every night
 NIGHTTUPLES = [[1, 1, 0, 0], [2, 2, 1, 0], [4, 4, 4, 4]]

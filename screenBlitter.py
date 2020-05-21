@@ -4,11 +4,12 @@ from colors import WHITE, GRAY, BLACK, RED, YELLOW, GREEN, BLUE, ORANGE, L_RED
 import gameData
 from time import time
 import loader
-from helpFunctions import returnOfficePrefix, startNight, checkIfOver, returnHour
+from helpFunctions import returnOfficePrefix, startNight, checkIfOver, returnHour, version, author, state, date
 from time import sleep as wait
 from power import Power
-from metaData import __version__, __author__, __state__
 import numpy as np
+
+## helpful functions to help me handle some things i don't want to see for the 400th time every time I open screen.py ##
 
 class ScreenBlitter:
 	def customRed(self):
@@ -90,12 +91,17 @@ class ScreenBlitter:
 		txt = Text("FIVE", 1200, 40, 50, self.window)
 		txt = Text("AWESOME", 1130, 100, 50, self.window)
 		txt = Text("NIGHTS", 1170, 160, 50, self.window)
-		txt = Text(f"{__state__}", 1180, 220, 50, self.window, RED)
-		txt = Text(f"version {__version__}", 1180, 690, 30, self.window)
-		txt = Text(f"made by the unspeakable {__author__}", 990, 650, 30, self.window)
+		txt = Text(f"{state()}", 1180, 220, 50, self.window, RED)
+		txt = Text(f"last updated on {date()}", 1080, 610, 30, self.window)
+		txt = Text(f"version {version()}", 1180, 690, 30, self.window)
+		txt = Text(f"made by the unspeakable {author()}", 990, 650, 30, self.window)
 		return
 
 	def mainButtons(self):
+		helpBtn = Button(GRAY, (40, 140, 250, 50), self.window)
+		txt = Text("How to play?", 160, 165, 35, self.window, BLACK)
+		if helpBtn.checkIfClicked():
+			self.blitTutorial()
 		newBtn = Button(GRAY, (60, 240, 200, 50),  self.window)
 		txt = Text("New Game", 160, 265, 35, self.window, BLACK)
 		if newBtn.checkIfClicked():
@@ -146,4 +152,35 @@ class ScreenBlitter:
 			btn = Button(colorArray[i], (x, y, 20, 50), self.window)
 			x += 40
 		return
+
+	def showOff(self, index):
+		self.window.blit(self.extras[index], (0, 0))
+		while True:
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					pygame.quit()
+					quit()
+				elif event.type == pygame.KEYDOWN:
+					if chr(event.key).lower() == "d" and index < len(self.extras) - 1:
+						self.showOff(index + 1)
+					elif chr(event.key).lower() == "a" and index > 0:
+						self.showOff(index - 1)
+					if event.key == pygame.K_ESCAPE:
+						self.blitMainMenu()
+			pygame.display.update()
+
+	def blitTutorial(self):
+		self.window.fill(BLACK)
+		while True:
+			txt = Text("a - close/open the left door", self.x // 2, 50, 50, self.window)
+			txt = Text("d - close/open the right door", self.x // 2, 150, 50, self.window)
+			txt = Text("s - close/open the cameras", self.x // 2, 250, 50, self.window)
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					pygame.quit()
+					quit()
+				elif event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						self.blitMainMenu()
+			pygame.display.update()
 	pass

@@ -1,5 +1,8 @@
 from time import time
 from gameData import NIGHT_LENGTH
+import os
+import pygame
+import json
 
 ## helpful functions to help me handle some things i don't want to see for the 400th time every time I open screen.py ##
 
@@ -39,3 +42,30 @@ def returnHour():
 		# in case the code does speak, we urge you to ignore its advise, but that is, if it could speak.
 		# which it could not.
 		return abs(6 - int(NIGHT_LENGTH // t))
+
+def returnFiles(direc, prefix):
+	imgsArray = []
+	nameArray = []
+	lis = os.listdir(direc)
+	length = len(prefix)
+	for file in lis:
+		try:
+			if file[:length] == prefix:
+				nameArray.append(file)
+		except:
+			continue
+	for name in nameArray:
+		imgsArray.append(pygame.image.load(direc + "\\" + name))
+	return imgsArray, nameArray
+
+def version():
+	return json.load(open("metaData.json", "r"))["version"]
+
+def author():
+	return json.load(open("metaData.json", "r"))["author"]
+
+def date():
+	return json.load(open("metaData.json", "r"))["release date"]
+
+def state():
+	return json.load(open("metaData.json", "r"))["state"]

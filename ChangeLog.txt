@@ -1,3 +1,12 @@
+version 0.06:
+- created a function to load images with the same prefix
+- added the offices to the extras menu (currently the regular ones, will later add "documentation" on them)
+- added last updated to the main menu
+- updated the metaData to a .json file
+- pressing the escape button (esc) will now return you to the main menu
+- added a "how to play"
+- exe DOES NOT WORK, IM WORKING TO RESOLVE THIS ISSUE
+
 version 0.05:
 - added a metadata file to store the metadata for the game
 - added a screenBlitter superclass to tidy the code
