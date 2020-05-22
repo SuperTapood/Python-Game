@@ -1,7 +1,7 @@
 import pygame
 import os
 from easyPygame import Button, Text
-from colors import WHITE, GRAY, BLACK, RED, YELLOW
+from colors import WHITE, GRAY, BLACK, RED, YELLOW, GREEN, BLUE
 import gameData
 from time import time
 import loader
@@ -55,11 +55,16 @@ class Screen(ScreenBlitter):
 			self.customYellow()
 			self.customGreen()
 			self.calculatePoints()
+			maxBtn = Button(GRAY, (800, 470, 450, 150), self.window)
+			txt = Text("Set all to 20", 1050, 495, 50, self.window, BLACK)
+			if maxBtn.checkIfClicked():
+				gameData.ENEMY_LEVELS = [20, 20, 20, 20]
 			startBtn = Button(GRAY, (800, 670, 450, 150), self.window)
 			txt = Text("Begin Night", 1050, 695, 50, self.window, BLACK)
 			if startBtn.checkIfClicked():
 				self.bootCustomNight()
 				startNight()
+				self.power = Power()
 				self.blitOffice("00")
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
@@ -114,7 +119,8 @@ class Screen(ScreenBlitter):
 		self.window.blit(self.imgs[self.imgNames.index(officeState)], (0, 0))
 		start = time()
 		while True:
-			self.power.tick()
+			if self.power.tick():
+				self.blitBlackOut()
 			self.power.change(officeState)
 			if checkIfOver():
 				self.blitWin()
@@ -144,7 +150,8 @@ class Screen(ScreenBlitter):
 		start = time()
 		officeState = prefix
 		while True:
-			self.power.tick()
+			if self.power.tick():
+				self.blitBlackOut()
 			if checkIfOver():
 				self.blitWin()
 			self.window.fill(BLACK)
@@ -166,16 +173,18 @@ class Screen(ScreenBlitter):
 			start = time()
 			pygame.display.update()
 			if self.enemies.attack(prefix):
-				self.blitDeathScreen()
+				self.blitDeathScreen(self.enemies.kill)
 		return
 
-	def blitDeathScreen(self):
+	def blitDeathScreen(self, cause):
+		nameArray = [RED, GREEN, BLUE, YELLOW]
+		color = nameArray[cause]
 		self.window.fill(BLACK)
 		start = time()
 		while True:
 			if time() - start >= 5:
 				self.blitMainMenu()
-			txt = Text("You A Dead Boi", self.x // 2, self.y // 2, 50, self.window, RED)
+			txt = Text("You A Dead Boi", self.x // 2, self.y // 2, 50, self.window, color)
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					pygame.quit()
@@ -230,5 +239,26 @@ class Screen(ScreenBlitter):
 						if event.key == pygame.K_ESCAPE:
 							self.blitMainMenu()
 			pygame.display.update()
+		return
+
+	def blitBlackOut(self):
+		start = time()
+		self.window.fill(BLACK)
+		prefix = "00"
+		while True:
+			if checkIfOver():
+				self.blitWin()
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					pygame.quit()
+					quit()
+				elif event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						self.blitMainMenu()
+			self.enemies.tick(time() - start)
+			start = time()
+			pygame.display.update()
+			if self.enemies.attack(prefix):
+				self.blitDeathScreen(self.enemies.kill)
 		return
 	pass

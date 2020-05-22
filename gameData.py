@@ -56,13 +56,13 @@ def updateHS(pts):
 NIGHTTUPLES = [[1, 1, 0, 0], [2, 2, 1, 0], [4, 4, 4, 4]]
 # the max playalbe night (== len(NIGHTTUPLES))
 CAP_NIGHT = 3
-# current night, set to 7 for testing, i have 2 variables for that because thats how we roll BABY
-NIGHT = 7
-CURRENT_NIGHT = 7
+# current night, set to 5 for testing, i have 2 variables for that because thats how we roll BABY
+NIGHT = 3
+CURRENT_NIGHT = 3
 # lenght of the night in secs
 NIGHT_LENGTH = 600
 # how long an enemy takes before trying to move in secs (default)
-ENEMY_DELAY = 28
+ENEMY_DELAY = 2.8
 # user's high score, custom night
 HIGH_SCORE = 0
 # did the player beat the sixth or seventh night? (0 - F, 1 - T)

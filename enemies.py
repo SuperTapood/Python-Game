@@ -13,6 +13,7 @@ class Enemies:
 		self.enemies = []
 		for path, side, level in zip(gameData.ENEMY_PATHS, gameData.ENEMY_SIDES, levelTuple):
 			self.enemies.append(Enemy(path, level, side))
+		self.kill = None
 		return
 
 	def tick(self, factor):
@@ -33,6 +34,7 @@ class Enemies:
 		"""
 		for enem in self.enemies:
 			if enem.canAttack(prefix):
+				self.kill = self.enemies.index(enem)
 				return True
 		return False
 

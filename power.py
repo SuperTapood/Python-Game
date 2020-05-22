@@ -23,7 +23,7 @@ class Power:
 		if time() - self.count >= 1:
 			self.count = time()
 			self.substract()
-			if self.power <= 0:
+			if self.power < 0:
 				return True
 			return False
 		return False
