@@ -1,4 +1,3 @@
-import json
 from switch import switch, case
 from colors import RED, YELLOW, GREEN, BLUE
 import numpy as np

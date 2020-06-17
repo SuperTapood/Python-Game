@@ -10,7 +10,6 @@ version 0.6:
 - updated the metaData to a .json file
 - pressing the escape button (esc) will now return you to the main menu
 - added a "how to play"
-- exe DOES NOT WORK, IM WORKING TO RESOLVE THIS ISSUE
 
 version 0.5:
 - added a metadata file to store the metadata for the game
