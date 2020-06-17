@@ -1,9 +1,11 @@
-version 0.7:
+# CHANGE LOG
+
+# version 0.7:
 - added blackout
 - added color to the death screen so you know who killed (discount animation)
 - laid the base for the jumpscares
 
-version 0.6:
+# version 0.6:
 - created a function to load images with the same prefix
 - added the offices to the extras menu (currently the regular ones, will later add "documentation" on them)
 - added last updated to the main menu
@@ -11,7 +13,7 @@ version 0.6:
 - pressing the escape button (esc) will now return you to the main menu
 - added a "how to play"
 
-version 0.5:
+# version 0.5:
 - added a metadata file to store the metadata for the game
 - added a screenBlitter superclass to tidy the code
 - added blue to the custom night menu
@@ -25,7 +27,7 @@ version 0.5:
 - added 2 more colors
 
 
-version 0.4:
+# version 0.4:
 - added three more enemies (and they work?)
 - "added" the first three nights
 - added the clock
@@ -33,7 +35,7 @@ version 0.4:
 - added the base for a power system
 - added file documentation
 
-version 0.3:
+# version 0.3:
 - added the scoring system (for night 7)
 - added the reset function for the enemies
 - added sixth night
@@ -42,7 +44,7 @@ version 0.3:
 - enemies are now allowed to skip a clock randomly
 - added a semi progress bar to mimic how far the enemy is
 
-version 0.2:
+# version 0.2:
 - added a switch-case class for complex if-ing
 - added first winning screen
 - added death screen
@@ -58,5 +60,5 @@ version 0.2:
 - added the office doors function (getting 1140 FPS)
 
 
-version 0.1:
+# version 0.1:
 - added the graphic engine i'll be using for the project (easyPygame) to handle everything
