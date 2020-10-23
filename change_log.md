@@ -1,12 +1,5 @@
 # CHANGE LOG
 
-# version 0.8:
-- moved game to the new shiney "game engine"
-- remaster has main menu
-- remaster has a single data loader and data file (JavaScriptObjectNotation [JSON])
-- remaster will now save to json every time the game closes
-- remaster has tutorial (added esc key)
-
 # version 0.7:
 - added blackout
 - added color to the death screen so you know who killed (discount animation)
